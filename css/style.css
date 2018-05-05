@@ -1,0 +1,14 @@
+body,html {
+    height: 100%;
+  }
+
+.welcome {
+    position: relative;
+    top: -4em;
+}
+
+.status {
+    height: 100px;
+    position: fixed;
+    bottom: 0;
+}

@@ -1,21 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Boilerplate -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Bootstrap 4 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom Css -->
+    <link rel="stylesheet" href="css/style.css">
     <title>What are you going to accomplish today?</title>
 </head>
 <body>
-
-    <div class="containter">
-        <div class="row">
-            <div class="col-xl">
-                <h1>Welcome, Gregory</h1>
-            </div>
+    <!-- Welcome Container -->
+    <div class="d-flex flex-wrap w-100 h-100 p-3 justify-content-start welcome">
+        <!-- Welcome Text -->
+        <div class="w-100 align-self-center">
+            <h1 class="display-2">Welcome, Gregory</h1>
+            <p class="lead align-self-center">What will you create today?</p>
         </div>
     </div>
+    <!-- Status Container -->
+    <div class="d-flex w-100 p-3 justify-content-between status">
+        <!-- Time -->
+        <h1 class="display-4 align-self-end">12:45</h1>
+        <!-- Weather -->
+        <h1 class="display-4 align-self-end">76&deg;C</h1>
+    </div>
     
+    
+
+
+    <!-- Bootstrap Dependencies -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
