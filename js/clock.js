@@ -14,8 +14,8 @@
             // Access the "getMinutes" method with the dot accessor.
             minutes = time.getMinutes();
 
-        //Select the time class and display the hours and minutes
-        $(".time")[0].innerHTML = addZero(hours) + ":" + addZero(minutes);
+            //Select the time class and display the hours and minutes
+        $("#time")[0].innerHTML = addZero(hours) + ":" + addZero(minutes);
     
         //Add zero in from of any single digit time
         function addZero(num) {
@@ -23,6 +23,23 @@
             num = '0' + num;
             }
             return num;
+        }
+
+        //Run the greeting function
+        greeting(hours);
+    }
+
+    function greeting(hour) {
+        if (hour < 6) {
+            $("#welcome-message")[0].innerHTML = "Working late again, Gregory.";
+        } else if (hour > 5 && hour < 12){
+            $("#welcome-message")[0].innerHTML = "Good morning, Gregory.";
+        } else if (hour > 11 && hour < 17){
+            $("#welcome-message")[0].innerHTML = "Good afternoon, Gregory."; 
+        } else if (hour > 16 && hour < 21){
+            $("#welcome-message")[0].innerHTML = "Welcome, Gregory.";
+        } else if (hour > 20 && hour < 24){
+            $("#welcome-message")[0].innerHTML = "Good evening, Gregory.";
         }
     }
 
