@@ -4,6 +4,7 @@
     function init () {
         clock();
         setInterval(clock, 10000);
+        greeting();
     };
 
     //Create the clock
@@ -24,12 +25,14 @@
             }
             return num;
         }
-
-        //Run the greeting function
-        greeting(hours);
     }
 
-    function greeting(hour) {
+    function greeting() {
+        //Get the hour
+        var time = new Date(),
+            hour = time.getHours();
+            
+        //set a message based on the hour
         if (hour < 6) {
             $("#welcome-message")[0].innerHTML = "Working late again, Gregory.";
         } else if (hour > 5 && hour < 12){
