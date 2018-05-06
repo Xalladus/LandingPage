@@ -1,0 +1,16 @@
+{
+  "name": "landingpage",
+  "version": "1.0.0",
+  "description": "This is a landing page for when you open a new browser window",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Gregory Alexander",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.4",
+    "request": "^2.85.0"
+  }
+}
