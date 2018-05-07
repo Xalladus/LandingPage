@@ -13,6 +13,18 @@
     <title>What are you going to accomplish today?</title>
 </head>
 <body>
+<ul class="slideshow">
+    
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+
+    <!-- <%= photoURLs[0] %> -->
+
+
+</ul>
     <!-- Welcome Container -->
     <div class="d-flex flex-wrap w-100 h-100 p-3 justify-content-start welcome">
         <!-- Welcome Text -->
@@ -26,7 +38,11 @@
         <!-- Time -->
         <h1 class="display-4 align-self-end" id="time"></h1>
         <!-- Weather -->
-        <h1 class="display-4 align-self-end" id="temp"><%= condition.temp %>&deg;C</h1>
+        <div class="align-self-end text-right" id="temp">
+            <p class="mb-0">Houston's <%= condition.text %></p>
+            <h1 class="mb-0 display-4 temp"><%= condition.temp %>&deg;C</h1>
+            <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
+        </div>
     </div>
     
     <!-- Bootstrap Dependencies -->
@@ -35,6 +51,5 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Your script files -->
     <script src="/js/clock.js"></script>
-    <script src="/js/weather.js"></script>
 </body>
 </html>
