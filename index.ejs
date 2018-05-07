@@ -13,37 +13,32 @@
     <title>What are you going to accomplish today?</title>
 </head>
 <body>
-<ul class="slideshow">
-    
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-    <li></li>
-
-    <!-- <%= photoURLs[0] %> -->
-
+<ul class="slideshow">   
+    <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
+        <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)"></li>
+    <% }; %>
 
 </ul>
     <!-- Welcome Container -->
     <div class="d-flex flex-wrap w-100 h-100 p-3 justify-content-start welcome">
         <!-- Welcome Text -->
         <div class="w-100 align-self-center">
-            <h1 class="display-2" id="welcome-message"></h1>
-            <p class="lead align-self-center" id="support-message">What will you create today?</p>
+            <h1 class="display-2 vText" id="welcome-message"></h1>
+            <p class="lead align-self-center vText" id="support-message">What will you create today?</p>
         </div>
     </div>
     <!-- Status Container -->
     <div class="d-flex w-100 p-3 justify-content-between status">
         <!-- Time -->
-        <h1 class="display-4 align-self-end" id="time"></h1>
+        <h1 class="display-4 align-self-end vText" id="time"></h1>
         <!-- Weather -->
         <div class="align-self-end text-right" id="temp">
-            <p class="mb-0">Houston's <%= condition.text %></p>
-            <h1 class="mb-0 display-4 temp"><%= condition.temp %>&deg;C</h1>
+            <p class="mb-0 vText">Houston's <%= condition.text %></p>
+            <h1 class="mb-0 display-4 temp vText"><%= condition.temp %>&deg;C</h1>
             <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
         </div>
     </div>
+    
     
     <!-- Bootstrap Dependencies -->
     <script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
@@ -51,5 +46,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Your script files -->
     <script src="/js/clock.js"></script>
+   
 </body>
 </html>

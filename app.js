@@ -2,11 +2,17 @@
 var express = require('express');
 var app = express();
 const request = require('request');
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-  res.render('../index', {condition: condition, photoURLs: photoURLs, oppColor: oppColor});
+  res.render('../index', {condition: condition, unsplashData: unsplashData});
+  //dom manipulation, you need to somehow load jquery or the document
+  
+  
 });
 
 app.listen(3000, function () {
@@ -29,8 +35,21 @@ var condition;
 
 var apiKey = "client_id=fe7c436b0f520f6477593a26ea6222f5fc548eb6871ddea682184e753182e0e0";
 var reqURL = 'https://api.unsplash.com/photos/random?featured=true&count=5&'+apiKey;
-var photoURLs = [];
-var oppColor = [];
+
+
+var unsplashData = {
+    photoURLs: [],
+    orgColor: [],
+    oppColor: [],
+    name: [],
+    userName: []
+};
+
+// var photoURLs = [];
+// var orgColor = [];
+// var oppColor = [];
+// var unName = [];
+// var unUsername = [];
 
 
 request(reqURL, (err, response, body) => { 
@@ -38,11 +57,13 @@ request(reqURL, (err, response, body) => {
      // console.log(body); // show the page
       var result = JSON.parse(body); //this takes the response and changes it from a string to an object
       result.forEach(element => {
-        
-        photoURLs.push(element['urls']['raw']);
-        oppColor.push(hexToComplimentary(element['color']));
+        unsplashData.photoURLs.push(element['urls']['raw']);
+        unsplashData.orgColor.push(element['color']);
+        unsplashData.oppColor.push(hexToComplimentary(element['color']));
+        unsplashData.name.push(element['user']['name']);
+        unsplashData.userName.push(element['user']['username']);
       });
-      console.log(photoURLs);
+      console.log(unsplashData);
   } else {
       console.log("Photos error:" + err);
   }

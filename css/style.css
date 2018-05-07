@@ -3,7 +3,7 @@ body,html {
   }
 
 body {
-    background-color: #000;
+    background-color: #fff;
 }
 
 .welcome {
@@ -85,6 +85,13 @@ body {
       opacity: 0
     }
   }
+
+.vText {
+  text-shadow: 1px 1px 25px rgba(255, 255, 255, 1);
+}
+
+
+
 
   /* Older browser support - .no-cssanimations class added by modernizr */
 .no-cssanimations .slideshow li {
