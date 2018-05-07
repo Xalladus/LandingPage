@@ -11,6 +11,8 @@
   "dependencies": {
     "express": "^4.16.3",
     "nodemon": "^1.17.4",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "unsplash-js": "^4.8.0",
+    "yql": "^1.0.2"
   }
 }
