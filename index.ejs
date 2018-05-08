@@ -16,6 +16,8 @@
 <ul class="slideshow">   
     <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
         <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)"></li>
+        <!-- Set the color to match the picture being used but its too soon for jQuery and document is undefined-->
+        <!-- document.getElementById("vText").style.color=unsplashData.oppColor[i]; -->
     <% }; %>
 
 </ul>
@@ -37,6 +39,16 @@
             <h1 class="mb-0 display-4 temp vText"><%= condition.temp %>&deg;C</h1>
             <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
         </div>
+    </div>
+    <!-- Unsplash Credit -->
+    <div class="d-flex flex-row-reverse w-100 credit">
+        <ul class="creditText">
+            <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
+            <li><a href="<%= unsplashData.userLink[i] %>" class="badge badge-dark">
+                Photo by <%= unsplashData.name[i] %> on Unsplash
+            </a></li>
+            <% }; %>
+        </ul>
     </div>
     
     

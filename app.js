@@ -36,20 +36,13 @@ var condition;
 var apiKey = "client_id=fe7c436b0f520f6477593a26ea6222f5fc548eb6871ddea682184e753182e0e0";
 var reqURL = 'https://api.unsplash.com/photos/random?featured=true&count=5&'+apiKey;
 
-
 var unsplashData = {
     photoURLs: [],
     orgColor: [],
     oppColor: [],
     name: [],
-    userName: []
+    userLink: []
 };
-
-// var photoURLs = [];
-// var orgColor = [];
-// var oppColor = [];
-// var unName = [];
-// var unUsername = [];
 
 
 request(reqURL, (err, response, body) => { 
@@ -61,21 +54,18 @@ request(reqURL, (err, response, body) => {
         unsplashData.orgColor.push(element['color']);
         unsplashData.oppColor.push(hexToComplimentary(element['color']));
         unsplashData.name.push(element['user']['name']);
-        unsplashData.userName.push(element['user']['username']);
+        unsplashData.userLink.push(element['links']['html']);
       });
-      console.log(unsplashData);
+      console.log(unsplashData.photoURLs);
   } else {
       console.log("Photos error:" + err);
   }
 });
 
 
-//Color Changer
-/* hexToComplimentary : Converts hex value to HSL, shifts
- * hue by 180 degrees and then converts hex, giving complimentary color
- * as a hex value
- * @param  [String] hex : hex value  
- * @return [String] : complimentary color as hex value
+//Color Changer Function
+/* From: https://stackoverflow.com/questions/1664140/js-function-to-calculate-complementary-colour/37657940#37657940
+ * @param  [String] hex : hex value ,  @return [String] : complimentary color as hex value
  */
 function hexToComplimentary(hex){
 

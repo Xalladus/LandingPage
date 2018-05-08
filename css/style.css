@@ -19,7 +19,14 @@ body {
     z-index: 1;
 }
 
-.temp{
+.credit {
+  height: 50px;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+}
+
+.temp {
     line-height: 0.8;
 }
 
@@ -69,6 +76,7 @@ body {
     animation-delay: 40s; 
   }
 
+  
   @keyframes imageAnimation { 
     0% { 
       opacity: 0; 
@@ -76,21 +84,88 @@ body {
     }
     10% {
       opacity: 1;
-      animation-timing-function: ease-out;
     }
     20% {
-      opacity: 1
+      opacity: 1;
+      animation-timing-function: ease-out;
     }
     30% {
-      opacity: 0
+      opacity: 0;
     }
   }
 
+  .creditText {
+     z-index: 1;
+  }
+
+  .creditText li{
+    list-style: none;
+    position: absolute;
+    top:-30px;
+    right:0;
+    padding-right: 1rem;
+    animation: textAnimation 50s linear infinite;
+  }
+  
+  .creditText li:nth-child(2) { 
+    animation-delay: 10s; 
+  }
+  .creditText li:nth-child(3) { 
+    animation-delay: 20s; 
+  }
+  .creditText li:nth-child(4) { 
+    animation-delay: 30s; 
+  }
+  .creditText li:nth-child(5) { 
+    animation-delay: 40s; 
+  }
+
+
+  @keyframes textAnimation { 
+    0% { 
+      top:-30px;
+      animation-timing-function: ease-out;
+    }
+    10% {
+      top:0;
+    }
+    20% {
+      top:0;
+      animation-timing-function: ease-out;
+    }
+    30% {
+      top:-30px;
+    }
+  }
+
+
+
 .vText {
   text-shadow: 1px 1px 25px rgba(255, 255, 255, 1);
+  animation: vTextAnimate 50s linear infinite;
 }
 
 
+
+/* The animation code */
+@keyframes vTextAnimate {
+  0%   {color:purple;
+        animation-timing-function: ease-in;}
+  10%  {color:red;}
+  20%   {color: red;
+        animation-timing-function: ease-in;}
+  30%  {color:blue;}
+  40%   {color: blue;
+        animation-timing-function: ease-in;}
+  50%  {color:green;}
+  60%   {color: green;
+        animation-timing-function: ease-in;}
+  70%   {color:orange;}
+  80%   {color: orange;
+        animation-timing-function: ease-in;}
+  90%  {color: purple;}
+  100%   {color:purple;}
+}
 
 
   /* Older browser support - .no-cssanimations class added by modernizr */
