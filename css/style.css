@@ -3,7 +3,12 @@ body,html {
   }
 
 body {
-    background-color: #fff;
+    background-color: #000;
+}
+
+.blockquote p{
+  color: #fff;
+  margin-bottom:0;
 }
 
 .welcome {
@@ -13,7 +18,6 @@ body {
 }
 
 .status {
-    height: 100px;
     position: fixed;
     bottom: 0;
     z-index: 1;
@@ -141,14 +145,23 @@ body {
 
 
 .vText {
-  text-shadow: 1px 1px 25px rgba(255, 255, 255, 1);
-  animation: vTextAnimate 50s linear infinite;
+  /* text-shadow: 1px 1px 25px rgba(255, 255, 255, 1); */
+  /* animation: vTextAnimate 50s linear infinite; */
+  color: white;
+}
+
+.backgroundShade {
+  background: -moz-linear-gradient(top, rgba(14,14,14,0.75) 0%, rgba(14,14,14,0.75) 1%, rgba(0,0,0,0.25) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf0e0e0e', endColorstr='#40000000',GradientType=0 ); /* IE6-9 */
 }
 
 
 
 /* The animation code */
-@keyframes vTextAnimate {
+
+/* @keyframes vTextAnimate {
   0%   {color:purple;
         animation-timing-function: ease-in;}
   10%  {color:red;}
@@ -165,7 +178,7 @@ body {
         animation-timing-function: ease-in;}
   90%  {color: purple;}
   100%   {color:purple;}
-}
+} */
 
 
   /* Older browser support - .no-cssanimations class added by modernizr */
