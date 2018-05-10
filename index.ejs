@@ -1,12 +1,20 @@
 <%- include views/partials/header %>
 
 <!-- Background Image Slideshow -->
-    <ul class="slideshow">   
+    <ul class="slideshow">  
+        <% if (unsplashData.photoURLs.length < 2) { %>
+            <li style="background-image: url(<%= unsplashData.photoURLs[0] %>);
+                        animation: singleImage 5s linear;
+                        opacity: 1;"></li>
+        <% } else { %>
+    
         <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
             <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)"></li>
             <!-- Set the color to match the picture being used but its too soon for jQuery and document is undefined-->
             <!-- document.getElementById("vText").style.color=unsplashData.oppColor[i]; -->
         <% }; %>
+
+        <% } %>
 
     </ul>
     <!-- Welcome Container -->
@@ -35,11 +43,18 @@
     <!-- Unsplash Credit -->
     <div class="d-flex flex-row-reverse w-100 credit">
         <ul class="creditText">
+            <% if (unsplashData.photoURLs.length < 2) { %>
+                <li style="animation: singleMessage 1s ease-in;"><a href="<%= unsplashData.userLink[0] %>" class="badge badge-dark">
+                Photo by <%= unsplashData.name[0] %> on Unsplash
+        </a></li>
+            <% } else { %>
+
             <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
             <li><a href="<%= unsplashData.userLink[i] %>" class="badge badge-dark">
                 Photo by <%= unsplashData.name[i] %> on Unsplash
             </a></li>
             <% }; %>
+            <% } %>
         </ul>
     </div>
     

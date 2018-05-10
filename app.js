@@ -4,6 +4,9 @@ var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
 var oppColorChange = require('./js/oppColorChange.js');
+var defaultImg ={url: "https://images.unsplash.com/photo-1496003537615-40de4d373d18?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cc05ad203446836b834ee8b944341c5b&auto=format&fit=crop&w=1950&q=80",
+                name: "Ara Ghafoory",
+                link:"https://unsplash.com/@araghafoory"};
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
@@ -62,6 +65,9 @@ request(unsplashURL, (err, response, body) => {
       });
       console.log(unsplashData.photoURLs);
   } else {
+      unsplashData.photoURLs.push(defaultImg.url);
+      unsplashData.name.push(defaultImg.name);
+      unsplashData.userLink.push(defaultImg.link);
       console.log("Photos error:" + err);
   }
 });

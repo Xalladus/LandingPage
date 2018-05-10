@@ -24,7 +24,6 @@ body {
 }
 
 .credit {
-  height: 50px;
   position: fixed;
   top: 0;
   z-index: 1;
@@ -32,6 +31,16 @@ body {
 
 .temp {
     line-height: 0.8;
+}
+
+#time {
+  -webkit-border-radius: 0 10px 10px 0;
+  border-radius: 0 10px 10px 0;
+}
+
+#temp {
+  -webkit-border-radius: 10px 0 0 10px;
+  border-radius: 10px 0 0 10px;
 }
 
 .slideshow { 
@@ -60,23 +69,18 @@ body {
     animation: imageAnimation 50s linear infinite; 
   }
 
-  .slideshow li:nth-child(1) { 
-    background-image: url(http://i.imgur.com/K3mPv14.jpg) 
-  }
+  /* .slideshow li:nth-child(1) { 
+  } */
   .slideshow li:nth-child(2) { 
-    background-image: url(https://images.unsplash.com/photo-1501720891994-5f96c082882e?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=297b234a4a59c9efc3003fc66254aefb&auto=format&fit=crop&w=1950&q=80);
     animation-delay: 10s; 
   }
   .slideshow li:nth-child(3) { 
-    background-image: url(http://i.imgur.com/emvhOnb.jpg);
     animation-delay: 20s; 
   }
   .slideshow li:nth-child(4) { 
-    background-image: url(http://i.imgur.com/2LSMCmJ.jpg);
     animation-delay: 30s; 
   }
   .slideshow li:nth-child(5) { 
-    background-image: url(http://i.imgur.com/TVGe0Ef.jpg);
     animation-delay: 40s; 
   }
 
@@ -97,7 +101,21 @@ body {
       opacity: 0;
     }
   }
+  
+  @keyframes singleImage {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
 
+  @keyframes singleMessage {
+    from{
+      top: -30px;
+    }
+  }
   .creditText {
      z-index: 1;
   }
@@ -105,7 +123,7 @@ body {
   .creditText li{
     list-style: none;
     position: absolute;
-    top:-30px;
+    top: 0px;
     right:0;
     padding-right: 1rem;
     animation: textAnimation 50s linear infinite;
@@ -126,18 +144,23 @@ body {
 
 
   @keyframes textAnimation { 
-    0% { 
+    
+    0%{
       top:-30px;
+      
+    }
+    8% { 
+      top: -30px;
       animation-timing-function: ease-out;
     }
     10% {
       top:0;
     }
-    20% {
+    22% {
       top:0;
-      animation-timing-function: ease-out;
+      animation-timing-function: ease-in;
     }
-    30% {
+    25% {
       top:-30px;
     }
   }
