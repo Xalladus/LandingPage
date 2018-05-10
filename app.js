@@ -3,10 +3,16 @@ var express = require('express');
 var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
+require('dotenv').config({path: 'dotenv/process.env'}); //loads the environment variables
+
+//Site specific variables
 var oppColorChange = require('./js/oppColorChange.js');
-var defaultImg ={url: "https://images.unsplash.com/photo-1496003537615-40de4d373d18?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=cc05ad203446836b834ee8b944341c5b&auto=format&fit=crop&w=1950&q=80",
-                name: "Ara Ghafoory",
-                link:"https://unsplash.com/@araghafoory"};
+var defaultImg ={url: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=45fbe9046945ce711c299b8c6d26d998&auto=format&fit=crop&w=1931&q=80",
+                name: "Nikita Kachanovsky",
+                link:"https://unsplash.com/@nkachanovskyyy"};
+
+
+
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
@@ -31,9 +37,14 @@ var query = new YQL("select item.condition from weather.forecast where u='c' and
 var condition;
  //run the main weather query
  query.exec(function(err, data) {
-  condition = data.query.results.channel.item.condition;
-  //use condition.temp and condition.text
-  console.log('The current weather is ' + condition.temp + ' degrees. Its ' + condition.text +'.');    
+     if(!err){
+        condition = data.query.results.channel.item.condition;
+        //use condition.temp and condition.text
+        console.log('Weather API loaded: ' + condition.temp + ' degrees.');       
+     } else {
+         condition = {temp: '23', text: 'Room Temperature'}
+        console.log("Weather "+err);     
+    }
 });
 
 //Unsplash API
@@ -63,12 +74,12 @@ request(unsplashURL, (err, response, body) => {
         unsplashData.name.push(element['user']['name']);
         unsplashData.userLink.push(element['links']['html']);
       });
-      console.log(unsplashData.photoURLs);
+      console.log("Photo's API loaded");
   } else {
       unsplashData.photoURLs.push(defaultImg.url);
       unsplashData.name.push(defaultImg.name);
       unsplashData.userLink.push(defaultImg.link);
-      console.log("Photos error:" + err);
+      console.log("Photos Error: " + err);
   }
 });
 
@@ -81,7 +92,7 @@ var quote = {
     text: String
 };
 
-request(quoteURL, (err, response, body) =>{
+request(quoteURL, (err, response, body) => {
     if(!err && response.statusCode === 200){
         var result = JSON.parse(body);
         quote.author = result[0].title;
@@ -91,9 +102,11 @@ request(quoteURL, (err, response, body) =>{
         // arr.splice(0, 3);
         // arr.splice(-6);
         // quote.text = arr.join("");
-        console.log(quote);
+        console.log("Quote API Loaded");
     } else {
-        console.log("Quote error:" + err);
+        quote.text = "<p>Get off your ass, and sit down, and code!<p>";
+        quote.author = "Conscious Voice"
+        console.log("Quote " + err);
     }
 });
 
