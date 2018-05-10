@@ -4,8 +4,12 @@ var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
 require('dotenv').config({path: 'dotenv/process.env'}); //loads the environment variables
+var iplocation = require('iplocation');
+
+
 
 //Site specific variables
+var YQL = require('yql');
 var oppColorChange = require('./js/oppColorChange.js');
 var defaultImg ={url: "https://images.unsplash.com/photo-1510519138101-570d1dca3d66?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=45fbe9046945ce711c299b8c6d26d998&auto=format&fit=crop&w=1931&q=80",
                 name: "Nikita Kachanovsky",
@@ -30,29 +34,43 @@ app.listen(3000, function () {
   console.log('Example app listening at http://127.0.0.1:3000/');
 });
 
-//Weather API from Yahoo! 
-//-----------------------------------------------------------------------------
-var YQL = require('yql');
-var query = new YQL("select item.condition from weather.forecast where u='c' and woeid=12590119");
-var condition;
- //run the main weather query
- query.exec(function(err, data) {
-     if(!err){
-        condition = data.query.results.channel.item.condition;
-        //use condition.temp and condition.text
-        console.log('Weather API loaded: ' + condition.temp + ' degrees.');       
-     } else {
-         condition = {temp: '23', text: 'Room Temperature'}
-        console.log("Weather "+err);     
-    }
+//Location Services API and Weather API
+
+var weatherQuery;
+var ipAddress = "73.166.205.170";
+
+iplocation(ipAddress, function (error, res) {
+    var locale = res.city + ", " + res.region_code;//get the locale text
+    var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='" + locale + "')";
+    var weatherQuery = new YQL(query);
+    var condition;
+    //run the main weather query
+    var getWeather =  weatherQuery.exec(function(err, data) {
+        if(!err){
+            condition = data.query.results.channel[0].item.condition;
+            //use condition.temp and condition.text
+            console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
+        
+        } else {
+            condition = {temp: '23', text: 'Room Temperature'}
+            console.log("Weather "+err);     
+        }
+    });
 });
+
+//console.log("You are here "+ locale);
+
+
+
+
+
 
 //Unsplash API
 //-----------------------------------------------------------------------------
 
 //var apiKeyUnsplash = "fe7c436b0f520f6477593a26ea6222f5fc548eb6871ddea682184e753182e0e0";
 //export UNSPLASHAPIKEY environment variable
-var unsplashURL = 'https://api.unsplash.com/photos/random?featured=true&count=5&client_id='+process.env.UNSPLASHAPIKEY;
+var unsplashURL = 'https://api.unsplash.com/photos/random?featured=true&count=5&client_id=XXX'+process.env.UNSPLASHAPIKEY;
 
 var unsplashData = {
     photoURLs: [],
@@ -86,7 +104,7 @@ request(unsplashURL, (err, response, body) => {
 //Quote API
 //-----------------------------------------------------------------------------
 
-var quoteURL = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+var quoteURL = "http://XXXquotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
 var quote = {
     author: String,
     text: String
