@@ -4,10 +4,8 @@ var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
 require('dotenv').config({path: 'dotenv/process.env'}); //loads the environment variables
-var iplocation = require('iplocation');
-
-
-
+const requestIp = require('request-ip'); // gathers the ip address
+var iplocation = require('iplocation'); // looks up the location of the IP address
 //Site specific variables
 var YQL = require('yql');
 var oppColorChange = require('./js/oppColorChange.js');
@@ -17,51 +15,59 @@ var defaultImg ={url: "https://images.unsplash.com/photo-1510519138101-570d1dca3
 
 
 
-
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname));
 app.set('views', "views");
 app.set('view engine', 'ejs');
 
+// Add the find location middleware before starting the server
 
+const ipMiddleware = function(req, res, next) {
+    req.clientIp = requestIp.getClientIp(req); 
+    next();
+};
 
+app.use(ipMiddleware);
+
+// Route the user to the index file when / is visited
 app.get('/', function (req, res) {
-  res.render('../index', {condition: condition, unsplashData: unsplashData, quote: quote});
-  //dom manipulation, you need to somehow load jquery or the document
-});
+    res.render('../index', {condition: condition, unsplashData: unsplashData, quote: quote});
+    //dom manipulation, you need to somehow load jquery or the document
+    console.log(req.clientIp);//Retrieves the IP address
+    if (req.clientIp === "::ffff:127.0.0.1"){
+        console.log("You are on local environment");
+        req.clientIP = "73.166.205.170";
+    }
 
-app.listen(3000, function () {
-  console.log('Example app listening at http://127.0.0.1:3000/');
-});
-
-//Location Services API and Weather API
-
-var weatherQuery;
-var ipAddress = "73.166.205.170";
-
-iplocation(ipAddress, function (error, res) {
-    var locale = res.city + ", " + res.region_code;//get the locale text
-    var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='" + locale + "')";
-    var weatherQuery = new YQL(query);
-    var condition;
-    //run the main weather query
-    var getWeather =  weatherQuery.exec(function(err, data) {
-        if(!err){
-            condition = data.query.results.channel[0].item.condition;
-            //use condition.temp and condition.text
-            console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
-        
-        } else {
-            condition = {temp: '23', text: 'Room Temperature'}
-            console.log("Weather "+err);     
-        }
+    var condition; // this variable is sent back to the index file
+    iplocation(req.clientIP, function (error, res) {
+        city = res.city;
+        var locale = res.city + ", " + res.region_code;//get the locale text
+        var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='" + locale + "')";
+        var weatherQuery = new YQL(query);
+        //run the main weather query
+        var getWeather =  weatherQuery.exec(function(err, data) {
+            if(!err){
+                condition = data.query.results.channel[0].item.condition;
+                //use condition.temp and condition.text
+                condition.city = city;
+                console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
+            
+            } else {
+                condition = {temp: '23', text: 'Room Temperature', region:'Inside'}
+                console.log("Weather "+err);     
+            }
+        });
     });
 });
 
-//console.log("You are here "+ locale);
+//Start the server on port 3000
+app.listen(3000, function () {
+    console.log('Example app listening at http://127.0.0.1:3000/');
+  });
 
-
-
+//Location Services API and Weather API
+//-----------------------------------------------------------------------------
 
 
 
@@ -71,7 +77,7 @@ iplocation(ipAddress, function (error, res) {
 //var apiKeyUnsplash = "fe7c436b0f520f6477593a26ea6222f5fc548eb6871ddea682184e753182e0e0";
 //export UNSPLASHAPIKEY environment variable
 var unsplashURL = 'https://api.unsplash.com/photos/random?featured=true&count=5&client_id=XXX'+process.env.UNSPLASHAPIKEY;
-
+// this variable is sent back to the index file
 var unsplashData = {
     photoURLs: [],
     orgColor: [],
@@ -105,6 +111,7 @@ request(unsplashURL, (err, response, body) => {
 //-----------------------------------------------------------------------------
 
 var quoteURL = "http://XXXquotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+// this variable is sent back to the index file
 var quote = {
     author: String,
     text: String
