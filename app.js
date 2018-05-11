@@ -44,7 +44,6 @@ app.listen(3000, function () {
   });
 
 //IP Location API function 
-
 // var getLoc = function (ip){
 //     if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
 //         console.log("You are in local environment");

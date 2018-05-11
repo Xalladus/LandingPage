@@ -30,9 +30,18 @@
         </div>
     </div>
     <!-- Status Container -->
-    <div class="d-flex w-100 p-0 justify-content-between status">
+    <div class="d-flex w-100 p-0 justify-content-between align-items-end status">
         <!-- Time -->
         <h1 class="display-4 align-self-end vText backgroundShade pl-3 pr-1" id="time"></h1>
+        <!-- Link Icon List -->
+        <ul class="backgroundShade mb-0 linkList">
+            <li><a href="https://google.com"><i class="fab fa-google"></i></a></li>
+            <li><a href="https://udemy.com"><i class="fas fa-user-graduate"></i></a></li>
+            <li><a href="https://web.whatsapp.com/"><i class="fab fa-whatsapp"></i></a></li>
+            <li><a href="https://youtube.com"><i class="fab fa-youtube"></i></a></li>
+            <li><a href="https://reddit.com"><i class="fab fa-reddit-alien"></i></a></li>
+
+        </ul>
         <!-- Weather -->
         <div class="align-self-end text-right backgroundShade pr-3 pl-1 mb-2" id="temp">
             <p class="mb-0 vText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 

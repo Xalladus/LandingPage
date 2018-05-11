@@ -43,6 +43,8 @@ body {
   border-radius: 10px 0 0 10px;
 }
 
+/* Styles for the Background SlideShow */
+
 .slideshow { 
     position: fixed;
     width: 100%;
@@ -116,6 +118,8 @@ body {
       top: -30px;
     }
   }
+
+  /* Styles for the Photo Credit Section */
   .creditText {
      z-index: 1;
   }
@@ -173,11 +177,72 @@ body {
   color: white;
 }
 
+  /* Style for the Status Section at the bottom of the page */
+
 .backgroundShade {
   background: -moz-linear-gradient(top, rgba(14,14,14,0.75) 0%, rgba(14,14,14,0.75) 1%, rgba(0,0,0,0.25) 100%); /* FF3.6-15 */
   background: -webkit-linear-gradient(top, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf0e0e0e', endColorstr='#40000000',GradientType=0 ); /* IE6-9 */
+}
+.linkList{
+  -webkit-border-radius: 10px 10px 0 0;
+  border-radius: 10px 10px 0 0;
+  height: 75px;
+  padding: 0 1rem 4rem 1rem;
+}
+.linkList li{
+  list-style: none;
+  font-size: 3rem;
+  float: left;
+  padding: 0 0.5rem 0 0.5rem;
+  
+}
+
+.linkList li a{
+  color: white;
+  transition: all .5s ease-in-out; 
+}
+.linkList li:first-child{
+  padding: 0 0.5rem 0 0;
+}
+.linkList li:last-child{
+  padding: 0 0 0 0.5rem
+}
+.fa-google {
+  transition: all .2s ease-in-out; 
+}
+.fa-google:hover {
+  color: #4885ed;
+  transform: scale(1.3);
+}
+.fa-user-graduate{
+  transition: all .2s ease-in-out; 
+}
+.fa-user-graduate:hover{
+  color: #dc3545;
+  transform: scale(1.3);
+}
+.fa-whatsapp {
+  transition: all .2s ease-in-out; 
+}
+.fa-whatsapp:hover {
+  color: #34AF23;
+  transform: scale(1.3);
+}
+.fa-youtube {
+  transition: all .2s ease-in-out; 
+}
+.fa-youtube:hover {
+  color: #c4302b;
+  transform: scale(1.3);
+}
+.fa-reddit-alien{
+  transition: all .2s ease-in-out; 
+}
+.fa-reddit-alien:hover{
+  color:#FF5700;
+  transform: scale(1.3);
 }
 
 
