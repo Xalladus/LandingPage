@@ -35,10 +35,10 @@
         <h1 class="display-4 align-self-end vText backgroundShade pl-3 pr-1" id="time"></h1>
         <!-- Weather -->
         <div class="align-self-end text-right backgroundShade pr-3 pl-1 mb-2" id="temp">
-            <p class="mb-0 vText"><%= condition.city %>'s <%= condition.text %></p>
+            <p class="mb-0 vText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 
             <h1 class="mb-0 display-4 temp vText"><%= condition.temp %>&deg;C</h1>
             <% if (condition.text != "Room Temperature") { %>
-            <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
+                <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
             <% } %>
         </div>
     </div>

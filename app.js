@@ -4,8 +4,8 @@ var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
 require('dotenv').config({path: 'dotenv/process.env'}); //loads the environment variables
-const requestIp = require('request-ip'); // gathers the ip address
-var iplocation = require('iplocation'); // looks up the location of the IP address
+//const requestIp = require('request-ip'); // gathers the ip address
+
 //Site specific variables
 var YQL = require('yql');
 var oppColorChange = require('./js/oppColorChange.js');
@@ -20,45 +20,22 @@ app.use(express.static(__dirname));
 app.set('views', "views");
 app.set('view engine', 'ejs');
 
-// Add the find location middleware before starting the server
+// Add the find location middleware before starting the server - works
+// const ipMiddleware = function(req, res, next) {
+//     console.log("In ipMiddleware");
+//     req.clientIp = requestIp.getClientIp(req);
+//     next();
+// }
+//app.use(ipMiddleware);
 
-const ipMiddleware = function(req, res, next) {
-    req.clientIp = requestIp.getClientIp(req); 
-    next();
-};
 
-app.use(ipMiddleware);
+//Creating location middleware that takes the IP address and find the location info
+//attaching to the req object DOES NOT WORK - no middleware! 
 
 // Route the user to the index file when / is visited
 app.get('/', function (req, res) {
+    //create the index page
     res.render('../index', {condition: condition, unsplashData: unsplashData, quote: quote});
-    //dom manipulation, you need to somehow load jquery or the document
-    console.log(req.clientIp);//Retrieves the IP address
-    if (req.clientIp === "::ffff:127.0.0.1"){
-        console.log("You are on local environment");
-        req.clientIP = "73.166.205.170";
-    }
-
-    var condition; // this variable is sent back to the index file
-    iplocation(req.clientIP, function (error, res) {
-        city = res.city;
-        var locale = res.city + ", " + res.region_code;//get the locale text
-        var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='" + locale + "')";
-        var weatherQuery = new YQL(query);
-        //run the main weather query
-        var getWeather =  weatherQuery.exec(function(err, data) {
-            if(!err){
-                condition = data.query.results.channel[0].item.condition;
-                //use condition.temp and condition.text
-                condition.city = city;
-                console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
-            
-            } else {
-                condition = {temp: '23', text: 'Room Temperature', region:'Inside'}
-                console.log("Weather "+err);     
-            }
-        });
-    });
 });
 
 //Start the server on port 3000
@@ -66,9 +43,53 @@ app.listen(3000, function () {
     console.log('Example app listening at http://127.0.0.1:3000/');
   });
 
-//Location Services API and Weather API
-//-----------------------------------------------------------------------------
+//IP Location API function 
 
+// var getLoc = function (ip){
+//     if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
+//         console.log("You are in local environment");
+//         ip = "73.166.205.170";
+//     }
+//     var ipStackURL = "http://api.ipstack.com/"+ip+"?access_key="+process.env.IPSTACKKEY;
+//     request(ipStackURL, (err, response, body) => {
+//         if(!err && response.statusCode === 200){
+//             console.log("IpStack API Loaded");
+//             var results = JSON.parse(body);//success getting data
+//             return results;
+//             //req.city = results.city;
+//             // req.region = results.region_code;
+//             // req.locale = results.city + ", " + results.region_code;//get the locale text
+//             // req.lat = results.latitude;
+//             // req.long = results.logitude;
+//         } else {
+//             console.log("IpStack " + err);
+//         }
+//     });
+//     console.log(reqres);
+// }
+
+//Weather API 
+//-----------------------------------------------------------------------------
+var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='Houston, TX')";
+var weatherQuery = new YQL(query); 
+var condition = {
+    temp: String,
+    text: String,
+    city: String
+}
+var getWeather =  weatherQuery.exec(function(err, data) {
+    if(!err){
+        condition.temp = data.query.results.channel[0].item.condition.temp;
+        condition.text = data.query.results.channel[0].item.condition.text;
+        condition.city = "Houston";
+        console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
+    } else {
+        console.log("Weather "+err); 
+        condition.temp = '23';
+        condition.text = 'Room Temperature';
+        condition.city = 'Inside';
+    }
+});
 
 
 //Unsplash API
