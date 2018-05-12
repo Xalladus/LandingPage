@@ -32,7 +32,11 @@
     <!-- Status Container -->
     <div class="d-flex w-100 p-0 justify-content-between align-items-end status">
         <!-- Time -->
-        <h1 class="display-4 align-self-end vText backgroundShade pl-3 pr-1" id="time"></h1>
+        <div class="align-self-end vText backgroundShade p-2 pl-3 mb-3" id="dateTime">
+            <h1 class="display-4 mb-0 lineHH1" id="time"></h1>
+            <p id="date" class="mb-0"></p>
+        </div>
+
         <!-- Link Icon List -->
         <ul class="backgroundShade mb-0 linkList">
             <li><a href="https://google.com"><i class="fab fa-google"></i></a></li>
@@ -43,9 +47,9 @@
 
         </ul>
         <!-- Weather -->
-        <div class="align-self-end text-right backgroundShade pr-3 pl-1 mb-2" id="temp">
+        <div class="align-self-end text-right backgroundShade p-2 pr-3 mb-3" id="temp">
             <p class="mb-0 vText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 
-            <h1 class="mb-0 display-4 temp vText"><%= condition.temp %>&deg;C</h1>
+            <h1 class="mb-0 display-4 vText lineHH1"><%= condition.temp %>&deg;C</h1>
             <% if (condition.text != "Room Temperature") { %>
                 <a href="https://darksky.net/poweredby/" target="_blank"> 
                 <img src="https://darksky.net/dev/img/attribution/poweredby-darkbackground.png" style="height: 30px; width: auto;"/> </a>
@@ -77,6 +81,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Your script files -->
     <script src="/js/clock.js"></script>
+    <script src="/js/preload.js"></script>
    
 </body>
 </html>

@@ -62,18 +62,21 @@ app.listen(3000, function () {
 
 //Returns a new local IP, using a regular callback, nothing fancy here
 //-----------------------------------------------------------------------------
-var scrubIp = function(ip){
-    if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
-        console.log("You are in local environment");
-        ip = "129.7.135.130";//Forced in for testing, goes to Houston.
-    } else if (ip === null) {
-        console.log("IP address was null");
-    }
-    return ip;
+let scrubIp = function(ip){
+    return new Promise((resolve, reject)=> {
+        if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
+            console.log("You are in local environment");
+            ip = "129.7.135.130";//Forced in for testing, goes to Houston.
+        } else if (ip === null) {
+            reject(new Error("IP address was null"));
+        }
+        resolve(ip);
+    })
+    
 }
 //Creating a function with a Promise callback which should solve your issues
 //-----------------------------------------------------------------------------
-var getLoc = function(ip){
+let getLoc = function(ip){
     return new Promise((resolve, reject)=>{
         var ipStackURL = "http://api.ipstack.com/"+ip+"?access_key="+process.env.IPSTACKKEY;
         request(ipStackURL, (err, response, body) => {
@@ -89,7 +92,7 @@ var getLoc = function(ip){
 
 //Weather API 
 //-----------------------------------------------------------------------------
-var getWeather = function (data) {
+let getWeather = function (data) {
     return new Promise((resolve, reject)=>{
         let weatherData = {
             city: data.city,

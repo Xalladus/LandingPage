@@ -13,10 +13,13 @@
             // Access the "getHours" method on the Date object with the dot accessor.
             hours = time.getHours(),
             // Access the "getMinutes" method with the dot accessor.
-            minutes = time.getMinutes();
+            minutes = time.getMinutes(),
+            // Access the method to get a readable date
+            date = time.toDateString();
 
             //Select the time class and display the hours and minutes
         $("#time")[0].innerHTML = addZero(hours) + ":" + addZero(minutes);
+        $("#date")[0].innerHTML = date;
     
         //Add zero in from of any single digit time
         function addZero(num) {
