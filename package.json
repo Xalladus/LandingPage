@@ -15,7 +15,6 @@
     "express": "^4.16.3",
     "request": "^2.85.0",
     "request-ip": "^2.0.2",
-    "unsplash-js": "^4.8.0",
-    "yql": "^1.0.2"
+    "unsplash-js": "^4.8.0"
   }
 }

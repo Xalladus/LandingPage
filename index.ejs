@@ -47,7 +47,8 @@
             <p class="mb-0 vText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 
             <h1 class="mb-0 display-4 temp vText"><%= condition.temp %>&deg;C</h1>
             <% if (condition.text != "Room Temperature") { %>
-                <a href="https://www.yahoo.com/?ilc=401" target="_blank"> <img src="https://poweredby.yahoo.com/purple.png" width="134" height="29"/> </a>
+                <a href="https://darksky.net/poweredby/" target="_blank"> 
+                <img src="https://darksky.net/dev/img/attribution/poweredby-darkbackground.png" style="height: 30px; width: auto;"/> </a>
             <% } %>
         </div>
     </div>
