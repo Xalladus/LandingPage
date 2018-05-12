@@ -4,7 +4,7 @@ var app = express();
 const request = require('request');
 var bodyParser = require('body-parser');
 require('dotenv').config({path: 'dotenv/process.env'}); //loads the environment variables
-//const requestIp = require('request-ip'); // gathers the ip address
+const requestIp = require('request-ip'); // gathers the ip address
 
 //Site specific variables
 var YQL = require('yql');
@@ -20,22 +20,61 @@ app.use(express.static(__dirname));
 app.set('views', "views");
 app.set('view engine', 'ejs');
 
-// Add the find location middleware before starting the server - works
+//Add the find location middleware before starting the server - works
 // const ipMiddleware = function(req, res, next) {
 //     console.log("In ipMiddleware");
 //     req.clientIp = requestIp.getClientIp(req);
 //     next();
 // }
-//app.use(ipMiddleware);
+// app.use(ipMiddleware);
 
 
 //Creating location middleware that takes the IP address and find the location info
 //attaching to the req object DOES NOT WORK - no middleware! 
+// 1) You get the IP address from the client
+// 2) You scrub the IP address and get a new one. 
+// 3) Get the location based off of that IP address
+
 
 // Route the user to the index file when / is visited
-app.get('/', function (req, res) {
-    //create the index page
-    res.render('../index', {condition: condition, unsplashData: unsplashData, quote: quote});
+app.get('/', async function (req, res) { //makes the callback function an async function
+    //-------------------- Works 
+    let clientIp
+    try{
+        clientIp = await requestIp.getClientIp(req); // gets the IP address
+    } catch (err){
+        console.log(err);
+    }
+    //--------------------  
+    let newIp
+    try{
+       newIp = await scrubIp(clientIp);// change Ip address if local
+    } catch (err){
+        console.log(err);
+    }
+    //---------------------
+    let locateClient
+    try {
+        locateClient = await getLoc(newIp);
+        //console.log(location); // works with the correct data being sent to the index page as well. 
+    } catch (err){
+        console.log(err);
+    }
+    //--------------------  
+    let condition 
+    try {
+        condition = await getWeather(locateClient);
+        console.log("Condition: "+condition);
+    } catch (err){
+        console.log(err);
+    }
+    //------------------------
+    let resRender 
+    try {
+        res.render('../index', {condition: condition, unsplashData: unsplashData, quote: quote});
+    } catch(err) {
+        console.log(err); 
+    }    
 });
 
 //Start the server on port 3000
@@ -43,53 +82,104 @@ app.listen(3000, function () {
     console.log('Example app listening at http://127.0.0.1:3000/');
   });
 
-//IP Location API function 
-// var getLoc = function (ip){
-//     if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
-//         console.log("You are in local environment");
-//         ip = "73.166.205.170";
-//     }
-//     var ipStackURL = "http://api.ipstack.com/"+ip+"?access_key="+process.env.IPSTACKKEY;
-//     request(ipStackURL, (err, response, body) => {
-//         if(!err && response.statusCode === 200){
-//             console.log("IpStack API Loaded");
-//             var results = JSON.parse(body);//success getting data
-//             return results;
-//             //req.city = results.city;
-//             // req.region = results.region_code;
-//             // req.locale = results.city + ", " + results.region_code;//get the locale text
-//             // req.lat = results.latitude;
-//             // req.long = results.logitude;
-//         } else {
-//             console.log("IpStack " + err);
-//         }
-//     });
-//     console.log(reqres);
-// }
+
+//Location Function
+//Returns a new local IP, using a regular callback, nothing fancy here
+var scrubIp = function(ip){
+    if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
+        console.log("You are in local environment");
+        ip = "192.41.148.220";//Forced in for testing, goes to Canadian city.
+    } else if (ip === null) {
+        console.log("IP address was null");
+    }
+    return ip;
+}
+
+//Creating a function with a Promise callback which should solve your issues
+var getLoc = function(ip){
+    return new Promise((resolve, reject)=>{
+        var ipStackURL = "http://api.ipstack.com/"+ip+"?access_key="+process.env.IPSTACKKEY;
+        request(ipStackURL, (err, response, body) => {
+            if (!err) {
+                resolve(JSON.parse(body));//return this data
+            } else {
+                reject (err);
+            }
+        })
+    })
+}
+
 
 //Weather API 
 //-----------------------------------------------------------------------------
-var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='Houston, TX')";
-var weatherQuery = new YQL(query); 
-var condition = {
-    temp: String,
-    text: String,
-    city: String
+// var getWeather = function (data) {
+//     return new Promise((resolve, reject)=>{
+//         let weatherData = {
+//             city: data.city,
+//             region: data.region_code,
+//             locale: data.city +", "+data.region_code,
+//             lat: data.latitude, 
+//             long: data.longitude,
+//             temp: String,
+//             text: String,
+//             status: String
+//         };
+       
+//         var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='Houston, TX')";
+//         var weatherQuery = new YQL(query); 
+//         var queryExec =  weatherQuery.exec(function(err, data) {
+//             if(!err){
+//                 console.log("DATA:" +JSON.parse(data));
+//                 weatherData.temp = data.query.results.channel[0].item.condition.temp;
+//                 weatherData.text = data.query.results.channel[0].item.condition.text;
+//                 weatherData.status = "You got the weather!"
+//                 resolve(weatherData);
+//             } else {
+//                 console.log("Weather err:" + err);
+//                 weatherData.temp = '23';
+//                 weatherData.text = 'Room Temperature';
+//                 weatherData.city = 'Inside';
+//                 weatherData.status = "You could not get the weather!"
+//                 reject(weatherData);
+//             }
+//         })
+//     })
+    
+// }
+//Weather API 
+//-----------------------------------------------------------------------------
+var getWeather = function (data) {
+    let weatherData = {
+        city: data.city,
+        region: data.region_code,
+        locale: data.city +", "+data.region_code,
+        lat: data.latitude, 
+        long: data.longitude,
+        temp: '23',
+        text: 'Room Temperature',
+        status: 'Yippie'
+    };  
+     return(weatherData);
+    // var query = "select item.condition from weather.forecast where u='c' and woeid in (select woeid from geo.places where text='Houston, TX')";
+    // var weatherQuery = new YQL(query); 
+    // var queryExec =  weatherQuery.exec(function(err, data) {
+    //         if(!err){
+    //             console.log("DATA:" +data.query.results.channel[0].item.condition.temp);
+    //             weatherData.temp = data.query.results.channel[0].item.condition.temp;
+    //             weatherData.text = data.query.results.channel[0].item.condition.text;
+    //             weatherData.status = "You got the weather!"
+    //             return(weatherData);
+    //         } else {
+    //             console.log("Weather err:" + err);
+    //             weatherData.temp = '23';
+    //             weatherData.text = 'Room Temperature';
+    //             weatherData.city = 'Inside';
+    //             weatherData.status = "You could not get the weather!"
+    //             return(weatherData);
+    //         }
+    // });
 }
-var getWeather =  weatherQuery.exec(function(err, data) {
-    if(!err){
-        condition.temp = data.query.results.channel[0].item.condition.temp;
-        condition.text = data.query.results.channel[0].item.condition.text;
-        condition.city = "Houston";
-        console.log('Weather API loaded: ' + condition.temp + ' degrees.');  
-    } else {
-        console.log("Weather "+err); 
-        condition.temp = '23';
-        condition.text = 'Room Temperature';
-        condition.city = 'Inside';
-    }
-});
-
+    
 
 //Unsplash API
 //-----------------------------------------------------------------------------
