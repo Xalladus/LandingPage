@@ -4,6 +4,9 @@ This is a simple home page that displays the time, weather, image slideshow, and
 ## The Stack
 I used Nodejs and Express primarily, and I did make a custom js file that changes the greeting message. I have used  the ES6 standards in my JS. I do not save any data to a server and I use a session to avoid making too many calls to my photo API. The transitions are all done in CSS. I have also used Bootstrap 4 and their flexbox grid system. 
 
+## Error Handling.
+Since this site is made up of API's I didn't want to break any functionality if there way an error. So if something fails to load for whatever reason there will be a replacement of it ready to go. The temperature will read a fake indoor temperature instead and the background image will load the 1 image from the server. 
+
 ## API's Used
 
 ### Weather
