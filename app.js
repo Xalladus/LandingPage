@@ -19,7 +19,7 @@ app.use(session(    {secret:process.env.KEY,
                     cookie:{maxAge: 3600000}}));
 app.set('views', "views");
 app.set('view engine', 'ejs');
-
+app.set('port', (process.env.PORT || 5000));
 
 // Route the user to the index file when / is visited
 app.get('/', async function (req, res) { //makes the callback function an async function
@@ -45,10 +45,10 @@ app.get('/', async function (req, res) { //makes the callback function an async 
     res.render('../index', {condition: condition, unsplashData: photos, quote: quote});    
 });
 
-//Start the server on port 3000
-app.listen(3000, ()=> {
-    console.log('Example app listening at http://127.0.0.1:3000/');
-});
+//Start the server on port ...
+app.listen(app.get('port'), ()=> {
+    console.log("Node app is running at localhost:" + app.get('port'))
+  })
 
 //Returns a new local IP, not an API
 //If this node somehow gets rejected then the entire page will not load. HANDLE ERROR BETTER
