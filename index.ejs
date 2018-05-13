@@ -1,7 +1,7 @@
 <%- include views/partials/header %>
 
 <!-- Background Image Slideshow -->
-    <ul class="slideshow">  
+    <ul class="slideshow preload">  
         <% if (unsplashData.photoURLs.length < 2) { %><!-- Code if photo api did not load -->
             <li style="background-image: url(<%= unsplashData.photoURLs[0] %>);
                         animation: singleImage 5s linear;
@@ -58,11 +58,11 @@
     </div>
     <!-- Unsplash Credit -->
     <div class="d-flex flex-row-reverse w-100 credit">
-        <ul class="creditText">
+        <ul class="creditText preload">
             <% if (unsplashData.name.length < 2) { %> <!-- Code if photo api did not load -->
                 <li style="top: 0; animation: singleMessage 1s ease-in;"><a href="<%= unsplashData.userLink[0] %>" class="badge badge-dark " target="_blank">
                 Photo by <%= unsplashData.name[0] %> on Unsplash
-        </a></li>
+                </a></li>
             <% } else { %>
 
             <% for (var i = 0; i < unsplashData.name.length; i++) { %>
