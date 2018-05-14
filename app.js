@@ -41,8 +41,7 @@ app.get('/', async function (req, res) { //makes the callback function an async 
     } catch (err){
         console.log(err); //This crashes the entire app
     }
-    console.log("Your IP address is: " + delPrefix);
-    console.log("Located: "+ locateClient);
+    
     res.render('../index', {condition: condition, unsplashData: photos, quote: quote});    
 });
 
@@ -59,12 +58,12 @@ const scrubIp = (ip)=> {
         //convert the ip address into an array
         delPrefix = ip.split().splice(0, 7).join();
         if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
-             console.log("You are in local environment");
-            
-            //ip = "129.7.135.130";//Forced in for testing, goes to Houston.
+            console.log("You are in local environment");
+            delPrefix = "129.7.135.130";//Forced in for testing, goes to Houston.
         } else if (delPrefix === null) {
             reject(new Error("IP address was null."));
         }
+        console.log("Your IP address is: " + delPrefix);
         resolve(delPrefix);
     })
 }
@@ -83,6 +82,7 @@ const getLoc = (ip)=> {
             } else {
                 console.log("IP Stack get location Error: " + body);
             }
+            console.log("Located: "+ body);
             resolve(JSON.parse(body));//return this data
         })
     })
