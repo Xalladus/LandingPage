@@ -23,7 +23,5 @@
     "request-ip": "^2.0.2",
     "unsplash-js": "^4.8.0"
   },
-  "devDependencies": {
-    "flightplan": "^0.6.17"
-  }
+  "devDependencies": {}
 }
