@@ -55,16 +55,17 @@ app.listen(app.get('port'), ()=> {
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
     return new Promise((resolve, reject)=> {
+        console.log("Initial IP: " + ip);
         ipLength = ip.split("").length - 7;
         delPrefix = ip.split("").splice(7, ipLength).join("");
+        console.log("New IP: " + delPrefix);
         //convert the ip address into an array
         if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
             console.log("You are in local environment");
             delPrefix = "129.7.135.130";//Forced in for testing, goes to Houston.
         } else if (delPrefix === null) {
             reject(new Error("IP address was null."));
-        }
-        console.log("Your IP address is: " + delPrefix);
+        } 
         resolve(delPrefix);
     })
 }
