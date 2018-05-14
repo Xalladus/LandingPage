@@ -54,7 +54,9 @@ app.listen(app.get('port'), ()=> {
 //If this node somehow gets rejected then the entire page will not load. HANDLE ERROR BETTER
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
-    delPrefix = ip.split("").splice(0, 7).join();
+    ipLength = ip.split("").length - 7;
+    delPrefix = ip.split("").splice(7, ipLength).join("");
+    ip = delPrefix;
     console.log("Your IP address is: " + delPrefix);
     return new Promise((resolve, reject)=> {
         //convert the ip address into an array
