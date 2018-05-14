@@ -54,8 +54,6 @@ app.listen(app.get('port'), ()=> {
 //If this node somehow gets rejected then the entire page will not load. HANDLE ERROR BETTER
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
-    
-    console.log("Your IP address is: " + delPrefix);
     return new Promise((resolve, reject)=> {
         let ipLength = ip.split("").length - 7;
         let delPrefix = ip.split("").splice(7, ipLength).join("");
@@ -66,6 +64,7 @@ const scrubIp = (ip)=> {
         } else if (delPrefix === null) {
             reject(new Error("IP address was null."));
         }
+        console.log("Your IP address is: " + delPrefix);
         resolve(delPrefix);
     })
 }
