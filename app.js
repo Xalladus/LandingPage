@@ -26,7 +26,6 @@ app.get('/', async function (req, res) { //makes the callback function an async 
     try{
         //These series of Promises are processed sequentially
         const clientIp = await requestIp.getClientIp(req); // gets the IP address
-        console.log("Your IP address is: " + clientIp);
         const newIp = await scrubIp(clientIp);// change Ip address if local
         const locateClient = await getLoc(newIp); //Get the lat and long for the client
         condition = await getWeather(locateClient); //Get the weather data
@@ -56,13 +55,19 @@ app.listen(app.get('port'), ()=> {
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
     return new Promise((resolve, reject)=> {
-        if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
-            console.log("You are in local environment");
-            ip = "129.7.135.130";//Forced in for testing, goes to Houston.
-        } else if (ip === null) {
+        //convert the ip address into an array
+        delPrefix = ip.split().splice(0, 7).join();
+        //console.log("New Arr: " + delPrefix);
+        //find the position of the last colon in the array
+        if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
+             console.log("You are in local environment");
+            //
+            //ip = "129.7.135.130";//Forced in for testing, goes to Houston.
+        } else if (delPrefix === null) {
             reject(new Error("IP address was null."));
         }
-        resolve(ip);
+        console.log("Your IP address is: " + delPrefix);
+        resolve(delPrefix);
     })
 }
 
