@@ -60,11 +60,9 @@ const scrubIp = (ip)=> {
         delPrefix = ip.split("").splice(7, ipLength).join("");
         console.log("New IP: " + delPrefix);
         //convert the ip address into an array
-        if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
+        if (delPrefix === "127.0.0.1" || delPrefix === ""){
             console.log("You are in local environment");
             delPrefix = "129.7.135.130";//Forced in for testing, goes to Houston.
-        } else if (delPrefix === null) {
-            reject(new Error("IP address was null."));
         } 
         resolve(delPrefix);
     })
