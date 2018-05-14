@@ -55,8 +55,8 @@ app.listen(app.get('port'), ()=> {
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
     return new Promise((resolve, reject)=> {
-        let ipLength = ip.split("").length - 7;
-        let delPrefix = ip.split("").splice(7, ipLength).join("");
+        ipLength = ip.split("").length - 7;
+        delPrefix = ip.split("").splice(7, ipLength).join("");
         //convert the ip address into an array
         if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
             console.log("You are in local environment");
