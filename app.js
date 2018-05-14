@@ -138,7 +138,7 @@ const getPhotos = ()=> {
                // console.log(body); // show the page
                 body = JSON.parse(body); //this takes the response and changes it from a string to an object
                 body.forEach(element => {
-                    unsplashData.photoURLs.push(element['urls']['raw']);
+                    unsplashData.photoURLs.push(element['urls']['full']);
                     unsplashData.orgColor.push(element['color']);
                     unsplashData.oppColor.push(oppColorChange.hexToComplimentary(element['color']));
                     unsplashData.name.push(element['user']['name']);

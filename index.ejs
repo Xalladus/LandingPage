@@ -1,7 +1,7 @@
 <%- include views/partials/header %>
 
 <!-- Background Image Slideshow -->
-    <ul class="slideshow preload">  
+    <ul class="slideshow">  
         <% if (unsplashData.photoURLs.length < 2) { %><!-- Code if photo api did not load -->
             <li style="background-image: url(<%= unsplashData.photoURLs[0] %>);
                         animation: singleImage 5s linear;
@@ -9,7 +9,9 @@
         <% } else { %>
     
         <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
-            <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)"></li>
+            <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)">
+                <div class="invisible" style="color: <% unsplashData.oppColor[i] %>"></div>
+            </li>
             <!-- Set the color to match the picture being used but its too soon for jQuery and document is undefined-->
             <!-- document.getElementById("vText").style.color=unsplashData.oppColor[i]; -->
         <% }; %>
@@ -58,7 +60,7 @@
     </div>
     <!-- Unsplash Credit -->
     <div class="d-flex flex-row-reverse w-100 credit">
-        <ul class="creditText preload">
+        <ul class="creditText">
             <% if (unsplashData.name.length < 2) { %> <!-- Code if photo api did not load -->
                 <li style="top: 0; animation: singleMessage 1s ease-in;"><a href="<%= unsplashData.userLink[0] %>" class="badge badge-dark " target="_blank">
                 Photo by <%= unsplashData.name[0] %> on Unsplash
@@ -81,7 +83,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Your script files -->
     <script src="/js/clock.js"></script>
-    <script src="/js/preload.js"></script>
+    <script src="/js/backgroundImage.js"></script>
    
 </body>
 </html>

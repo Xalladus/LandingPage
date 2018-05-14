@@ -6,10 +6,16 @@ body {
     background-color: #000;
 }
 
-.preload * {
-  transition: none !important;
+.textAnimate {
+  animation: textAnimation 50s linear infinite;
 }
 
+.photoAnimate{
+  animation: imageAnimation 50s linear infinite; 
+}
+.invisible {
+  visibility: hidden;
+}
 .blockquote p{
   color: #fff;
   margin-bottom:0;
@@ -72,7 +78,7 @@ body {
     background-repeat: no-repeat;
     opacity: 0;
     z-index: 0;
-    animation: imageAnimation 50s linear infinite; 
+    
   }
 
   /* .slideshow li:nth-child(1) { 
@@ -134,7 +140,6 @@ body {
     top: -30px;
     right:0;
     padding-right: 1rem;
-    animation: textAnimation 50s linear infinite;
   }
   
   .creditText li:nth-child(2) { 
