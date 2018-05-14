@@ -54,19 +54,19 @@ app.listen(app.get('port'), ()=> {
 //If this node somehow gets rejected then the entire page will not load. HANDLE ERROR BETTER
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
-    ipLength = ip.split("").length - 7;
-    delPrefix = ip.split("").splice(7, ipLength).join("");
-    ip = delPrefix;
+    
     console.log("Your IP address is: " + delPrefix);
     return new Promise((resolve, reject)=> {
+        let ipLength = ip.split("").length - 7;
+        let delPrefix = ip.split("").splice(7, ipLength).join("");
         //convert the ip address into an array
-        if (ip === "::ffff:127.0.0.1" || "127.0.0.1"){
+        if (delPrefix === "::ffff:127.0.0.1" || "127.0.0.1"){
             console.log("You are in local environment");
-            ip = "129.7.135.130";//Forced in for testing, goes to Houston.
-        } else if (ip === null) {
+            delPrefix = "129.7.135.130";//Forced in for testing, goes to Houston.
+        } else if (delPrefix === null) {
             reject(new Error("IP address was null."));
         }
-        resolve(ip);
+        resolve(delPrefix);
     })
 }
 
