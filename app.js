@@ -100,7 +100,7 @@ const getWeather = (data)=> {
             temp: String,
             text: String,
         };
-
+        //Check for city name, replace with region or country when available
         if (weatherData.city === null){
             if (weatherData.region_name === null){
                 weatherData.city = data.country_name;
@@ -111,7 +111,6 @@ const getWeather = (data)=> {
 
         //replace with call to darksy instead, using lat and long
         const darkSkyURL = "https://api.darksky.net/forecast/"+process.env.DARKSKYKEY+"/"+weatherData.lat+","+weatherData.long+weatherData.exclusions;
-        console.log(darkSkyURL);
         request(darkSkyURL, (err, response, body) => { 
             if (!err && response.statusCode === 200) {
                 console.log("DarkSky API loaded.");
