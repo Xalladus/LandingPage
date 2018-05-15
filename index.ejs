@@ -10,31 +10,32 @@
     
         <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
             <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)">
-                <div class="invisible" style="color: <% unsplashData.oppColor[i] %>"></div>
+                <div class="invisible" style="color: <%= unsplashData.orgColor[i] %>;"></div>
+                <div class="invisible2" style="color: <%= unsplashData.oppColor[i] %>;"></div>
             </li>
             <!-- Set the color to match the picture being used but its too soon for jQuery and document is undefined-->
-            <!-- document.getElementById("vText").style.color=unsplashData.oppColor[i]; -->
+            <!-- document.getElementById("cText").style.color=unsplashData.oppColor[i]; -->
         <% }; %>
 
         <% } %>
 
     </ul>
     <!-- Welcome Container -->
-    <div class="d-flex flex-wrap w-100 h-100 p-3 justify-content-start welcome">
+    <div class="d-flex flex-wrap w-100 h-100 justify-content-start welcome">
         <!-- Welcome Text -->
-        <div class="w-100 align-self-center">
-            <h1 class="display-2 vText" id="welcome-message"></h1>
+        <div class="align-self-center welcomeShade p-3">
+            <h1 class="display-2 tColRot" id="welcome-message"></h1>
             <blockquote class="blockquote">
-                <%- quote.text %>
-                <footer class="blockquote-footer"><cite title="Source Title"><%= quote.author %></cite></footer>
+                <div class="quote-message tColRot"><%- quote.text %></div>
+                <footer class="blockquote-footer tColRot"><cite title="Source Title"><%= quote.author %></cite></footer>
             <blockquote>
-            <!-- <p class="lead align-self-center vText" id="support-message">What will you create today?</p> -->
+            <!-- <p class="lead align-self-center cText" id="support-message">What will you create today?</p> -->
         </div>
     </div>
     <!-- Status Container -->
     <div class="d-flex w-100 p-0 justify-content-between align-items-end status">
         <!-- Time -->
-        <div class="align-self-end vText backgroundShade p-2 pl-3 mb-3" id="dateTime">
+        <div class="align-self-end cText backgroundShade p-2 pl-3 mb-3" id="dateTime">
             <h1 class="display-4 mb-0 lineHH1" id="time"></h1>
             <p id="date" class="mb-0"></p>
         </div>
@@ -50,8 +51,8 @@
         </ul>
         <!-- Weather -->
         <div class="align-self-end text-right backgroundShade p-2 pr-3 mb-3" id="temp">
-            <p class="mb-0 vText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 
-            <h1 class="mb-0 display-4 vText lineHH1"><%= condition.temp %>&deg;C</h1>
+            <p class="mb-0 cText" id="statusText"><%= condition.city %>'s <%= condition.text %></p> 
+            <h1 class="mb-0 display-4 cText lineHH1"><%= condition.temp %>&deg;C</h1>
             <% if (condition.text != "Room Temperature") { %>
                 <a href="https://darksky.net/poweredby/" target="_blank"> 
                 <img src="https://darksky.net/dev/img/attribution/poweredby-darkbackground.png" style="height: 30px; width: auto;"/> </a>
@@ -79,6 +80,7 @@
     
     <!-- Bootstrap Dependencies -->
     <script  src="https://code.jquery.com/jquery-3.3.1.min.js"  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <!-- Your script files -->

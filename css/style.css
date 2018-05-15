@@ -5,11 +5,9 @@ body,html {
 body {
     background-color: #000;
 }
-
 .textAnimate {
   animation: textAnimation 50s linear infinite;
 }
-
 .photoAnimate{
   animation: imageAnimation 50s linear infinite; 
 }
@@ -20,54 +18,51 @@ body {
   color: #fff;
   margin-bottom:0;
 }
-
 .welcome {
     position: relative;
     top: -5em;
     z-index: 1;
 }
-
 .status {
     position: fixed;
     bottom: 0;
     z-index: 1;
 }
-
 .credit {
   position: fixed;
   top: 0;
   z-index: 1;
 }
-
 .lineHH1 {
     line-height: 0.8;
 }
-
 #dateTime {
-  -webkit-border-radius: 0 10px 10px 0;
   border-radius: 0 10px 10px 0;
 }
-
 #temp {
-  -webkit-border-radius: 10px 0 0 10px;
   border-radius: 10px 0 0 10px;
+}
+.tColRot {
+  color: white;
+}
+.tColRot p {
+  color: white;
 }
 
 /* Styles for the Background SlideShow */
-
 .slideshow { 
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
-  .slideshow li { 
+.slideshow li { 
     width: 100%;
     height: 100%;
     position: absolute;
@@ -102,10 +97,10 @@ body {
       opacity: 0; 
       animation-timing-function: ease-in;
     }
-    10% {
+    5% {
       opacity: 1;
     }
-    20% {
+    25% {
       opacity: 1;
       animation-timing-function: ease-out;
     }
@@ -160,13 +155,12 @@ body {
     
     0%{
       top:-30px;
-      
     }
-    8% { 
+    5% { 
       top: -30px;
       animation-timing-function: ease-out;
     }
-    10% {
+    8% {
       top:0;
     }
     22% {
@@ -180,19 +174,26 @@ body {
 
 
 
-.vText {
+.cText {
   /* text-shadow: 1px 1px 25px rgba(255, 255, 255, 1); */
-  /* animation: vTextAnimate 50s linear infinite; */
+  /* animation: cText Animate 50s linear infinite; */
   color: white;
 }
 
   /* Style for the Status Section at the bottom of the page */
 
 .backgroundShade {
-  background: -moz-linear-gradient(top, rgba(14,14,14,0.75) 0%, rgba(14,14,14,0.75) 1%, rgba(0,0,0,0.25) 100%); /* FF3.6-15 */
-  background: -webkit-linear-gradient(top, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* Chrome10-25,Safari5.1-6 */
-  background: linear-gradient(to bottom, rgba(14,14,14,0.75) 0%,rgba(14,14,14,0.75) 1%,rgba(0,0,0,0.25) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#bf0e0e0e', endColorstr='#40000000',GradientType=0 ); /* IE6-9 */
+  background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.25) 100%);
+}
+
+.welcomeShade {
+  background: rgba(0, 0, 0, 0);
+  border-radius: 0 10px 10px 0; 
+  transition: all .5s ease-in-out;
+}
+
+.welcomeShade:hover {
+  background: rgba(0, 0, 0, 0.75);
 }
 .linkList{
   -webkit-border-radius: 10px 10px 0 0;
@@ -253,30 +254,6 @@ body {
   color:#FF5700;
   transform: scale(1.3);
 }
-
-
-
-/* The animation code */
-
-/* @keyframes vTextAnimate {
-  0%   {color:purple;
-        animation-timing-function: ease-in;}
-  10%  {color:red;}
-  20%   {color: red;
-        animation-timing-function: ease-in;}
-  30%  {color:blue;}
-  40%   {color: blue;
-        animation-timing-function: ease-in;}
-  50%  {color:green;}
-  60%   {color: green;
-        animation-timing-function: ease-in;}
-  70%   {color:orange;}
-  80%   {color: orange;
-        animation-timing-function: ease-in;}
-  90%  {color: purple;}
-  100%   {color:purple;}
-} */
-
 
   /* Older browser support - .no-cssanimations class added by modernizr */
 .no-cssanimations .slideshow li {

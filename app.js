@@ -55,10 +55,8 @@ app.listen(app.get('port'), ()=> {
 //-----------------------------------------------------------------------------
 const scrubIp = (ip)=> {
     return new Promise((resolve, reject)=> {
-        console.log("Initial IP: " + ip);
         ipLength = ip.split("").length - 7;
         delPrefix = ip.split("").splice(7, ipLength).join("");
-        console.log("New IP: " + delPrefix);
         //convert the ip address into an array
         if (delPrefix === "127.0.0.1" || delPrefix === ""){
             console.log("You are in local environment");
@@ -91,6 +89,7 @@ const getLoc = (ip)=> {
 //-----------------------------------------------------------------------------
 const getWeather = (data)=> {
     return new Promise((resolve, reject)=>{
+        
         let weatherData = {
             city: data.city,
             region: data.region_code,
@@ -102,8 +101,17 @@ const getWeather = (data)=> {
             text: String,
         };
 
+        if (weatherData.city === null){
+            if (weatherData.region_name === null){
+                weatherData.city = data.country_name;
+            } else {
+                weatherData.city = data.region_name;
+            }
+        }
+
         //replace with call to darksy instead, using lat and long
         const darkSkyURL = "https://api.darksky.net/forecast/"+process.env.DARKSKYKEY+"/"+weatherData.lat+","+weatherData.long+weatherData.exclusions;
+        console.log(darkSkyURL);
         request(darkSkyURL, (err, response, body) => { 
             if (!err && response.statusCode === 200) {
                 console.log("DarkSky API loaded.");
