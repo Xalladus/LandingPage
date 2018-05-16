@@ -101,8 +101,8 @@ const getWeather = (data)=> {
             text: String,
         };
         //Check for city name, replace with region or country when available
-        if (weatherData.city === null){
-            if (weatherData.region_name === null){
+        if (weatherData.city === "null" || weatherData.city === null){
+            if (weatherData.region_name === null || weatherData.city === "null" ){
                 weatherData.city = data.country_name;
             } else {
                 weatherData.city = data.region_name;
