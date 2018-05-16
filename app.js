@@ -108,8 +108,6 @@ const getWeather = (data)=> {
                 weatherData.city = data.region_name;
             }
         }
-        console.log(weatherData.city);
-
 
         //replace with call to darksy instead, using lat and long
         const darkSkyURL = "https://api.darksky.net/forecast/"+process.env.DARKSKYKEY+"/"+weatherData.lat+","+weatherData.long+weatherData.exclusions;
