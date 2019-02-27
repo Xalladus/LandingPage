@@ -10,7 +10,7 @@
     
         <% for (var i = 0; i < unsplashData.photoURLs.length; i++) { %>
             <li style="background-image: url(<%= unsplashData.photoURLs[i] %>)">
-                <div class="invisible" style="color: <%= unsplashData.orgColor[i] %>;"></div>
+                <div class="invisible" style="color: %= unsplashData.orgColor[i] %>;"></div>
                 <div class="invisible2" style="color: <%= unsplashData.oppColor[i] %>;"></div>
             </li>
             <!-- Set the color to match the picture being used but its too soon for jQuery and document is undefined-->
