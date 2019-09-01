@@ -170,7 +170,9 @@ const getPhotos = ()=> {
 //-----------------------------------------------------------------------------
 const getQuote = ()=> {
     return new Promise((resolve, reject)=>{
-        const quoteURL = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+        //They updated the API to use REST API built into Wordpress
+        //const quoteURL = "http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1";
+        const quoteURL = "https://quotesondesign.com/wp-json/wp/v2/posts/?orderby=rand&per_page=50";
         // this variable is sent back to the index file
         let quoteData = {
             author: String,
@@ -179,9 +181,10 @@ const getQuote = ()=> {
         request(quoteURL, (err, response, body) => {
             if(!err && response.statusCode === 200){
                 var result = JSON.parse(body);
-                quoteData.author = result[0].title;
-                quoteData.text = result[0].content;
-                console.log("Quote API Loaded");
+                var randResult = Math.floor(Math.random() * 50); 
+                quoteData.author = result[randResult].title.rendered;
+                quoteData.text = result[randResult].content.rendered;
+                console.log("Quote API Loaded: " + randResult);
             } else {
                 quoteData.text = "<p>Get off your ass, and sit down, and code!<p>";
                 quoteData.author = "Conscious Voice"
