@@ -24,7 +24,6 @@
     "request": "^2.85.0",
     "request-ip": "^2.0.2",
     "unsplash-js": "^4.8.0",
-    "stringstream": ">=0.0.6",
     "url-parse": "^1.4.4"
     
   },
