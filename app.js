@@ -181,6 +181,7 @@ const getQuote = ()=> {
         request(quoteURL, (err, response, body) => {
             if(!err && response.statusCode === 200){
                 var result = JSON.parse(body);
+                //the random command wasn't working so I have pulled 50 results and used my own random
                 var randResult = Math.floor(Math.random() * 50); 
                 quoteData.author = result[randResult].title.rendered;
                 quoteData.text = result[randResult].content.rendered;
